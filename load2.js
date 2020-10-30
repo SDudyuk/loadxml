@@ -2,7 +2,7 @@ var parseString = require("xml2js").parseString;
 var stripPrefix = require("xml2js").processors.stripPrefix;
 const fs = require('fs');
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
-var iconv = require('iconv-lite');
+
 
 /*
 var xml = `
@@ -23,7 +23,15 @@ console.log('start');
 
 parseString(buffer, { tagNameProcessors: [stripPrefix] }, function(err, result) {
   if (err) throw err;
-  fs.writeFileSync('user.json', JSON.stringify(result));
+
+  var str = JSON.stringify(result);
+
+  fs.writeFileSync('user.json', str);
+   
+  var obj = JSON.parse(str);
+  //console.log(JSON.stringify(obj));
+  console.log(obj.data.$.FORMAT_VERSION);
+
   //console.log(result);
   console.log("Done");
 });
